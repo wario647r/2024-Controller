@@ -83,6 +83,8 @@ public class OmniWheels extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        shoulder = hard
+        
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -99,6 +101,8 @@ public class OmniWheels extends LinearOpMode {
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
 
+
+
         // Wait for the game to start (driver presses START)
         telemetry.addData("High Five", "We Reboted!!!");
         telemetry.update();
@@ -111,9 +115,10 @@ public class OmniWheels extends LinearOpMode {
             double max;
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-            double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-            double lateral =  gamepad1.left_stick_x;
-            double yaw     =  gamepad1.right_stick_x;
+            double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value -- Forward/Backward
+            double lateral =  gamepad1.right_stick_x;  // Strafe left/right
+            double yaw     =  gamepad1.left_stick_x; // Rotate left/right
+           
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
