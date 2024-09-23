@@ -74,7 +74,7 @@ public class OmniWheels extends LinearOpMode {
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
     private DcMotor shoulder = null;
-  
+    private Servo   wrist = null;
     @Override
     public void runOpMode() {
 
@@ -85,7 +85,7 @@ public class OmniWheels extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         shoulder = hardwareMap.get(DcMotor.class, "armShoulder");
-        
+        wrist = hardwareMap.get(Servo.class, "armWrist");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -103,7 +103,7 @@ public class OmniWheels extends LinearOpMode {
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         shoulder.setDirection(DcMotor.Direction.UP);             // sets directions for shoulder (up and down)
         shoulder.setDirection(DcMotor.Direction.DOWN);
-
+        
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("High Five", "We Reboted!!!");
@@ -121,14 +121,18 @@ public class OmniWheels extends LinearOpMode {
             double lateral =  gamepad1.right_stick_x;  // Strafe left/right
             double yaw     =  gamepad1.left_stick_x; // Rotate left/right
             double up_down = gamepad1.right_stick_y; // move shoulder up/down
-
+            static final double INCREMENT = 0.01;
+            int CYCLEMS = 50;
+            double MAX_POS = 1.0;
+                MIN_POS = 0.0;
+            
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
             double leftFrontPower  = axial + lateral + yaw;
             double rightFrontPower = axial - lateral - yaw;
             double leftBackPower   = axial - lateral + yaw;
             double rightBackPower  = axial + lateral - yaw;
-            double shoulderPower   = up_down - up_down;
+            double shoulderPower   = up_down;
             
             
             // Normalize the values so no wheel power exceeds 100%
