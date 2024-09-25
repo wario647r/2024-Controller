@@ -63,9 +63,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="OmniWheels 0.1", group="OmniOp")
+@TeleOp(name="OmniWheelsConnor 0.1", group="OmniOp")
 @Disabled
-public class OmniWheels extends LinearOpMode {
+public class OmniWheelsConnor extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
@@ -73,8 +73,11 @@ public class OmniWheels extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
+    // Connor's motors
     private DcMotor shoulder = null;
+    // Connor's servos
     private Servo   wrist = null;
+    private Servo   claw = null;
     @Override
     public void runOpMode() {
 
@@ -84,9 +87,12 @@ public class OmniWheels extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        // Connor's motors
         shoulder = hardwareMap.get(DcMotor.class, "armShoulder");
+        // Connor's servos
         wrist = hardwareMap.get(Servo.class, "armWrist");
-
+        claw = hardwareMap.get(Servo.class, "armClaw");
+        
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
         // ########################################################################################
@@ -121,8 +127,10 @@ public class OmniWheels extends LinearOpMode {
             double lateral =  gamepad1.right_stick_x;  // Strafe left/right
             double yaw     =  gamepad1.left_stick_x; // Rotate left/right
             double up_down = gamepad1.right_stick_y; // move shoulder up/down
+            
+            // Servo setup
             static final double INCREMENT = 0.01;
-            int CYCLEMS = 50;
+            static final int CYCLEMS = 50;
             double MAX_POS = 1.0;
                 MIN_POS = 0.0;
             
