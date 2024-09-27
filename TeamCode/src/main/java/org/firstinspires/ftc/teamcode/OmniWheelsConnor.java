@@ -126,7 +126,17 @@ public class OmniWheelsConnor extends LinearOpMode {
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value -- Forward/Backward
             double lateral =  gamepad1.right_stick_x;  // Strafe left/right
             double yaw     =  gamepad1.left_stick_x; // Rotate left/right
-            double up_down = gamepad1.right_stick_y; // move shoulder up/down
+            
+            // Controls for shoulder
+            double arm_up_down = gamepad1.right_stick_y; // move shoulder up/down
+            
+            // Controls for claw
+            boolean grab       = gamepad2.right_bumper > 0.5; // Open is right bumper
+            boolean release    = gamepad2.left_bumper;        // Close is left bumper
+            
+            // Controls for wrist
+            boolean wrist_up   = gamepad2.dpad_up;   // Up on dpad makes wrist move up
+            boolean wrist_down = gamepad2.dpad_down; // Down on dpad makes wrist move down
             
             // Servo setup
             static final double INCREMENT = 0.01;
@@ -157,6 +167,22 @@ public class OmniWheelsConnor extends LinearOpMode {
                 shoulderPower   /= max;
             }
 
+            // Claw control
+            if (grab == true){            // If open claw button is pressed then open
+                claw_man.setPosition(0);   
+            } else if (release == true){
+                claw_man.setPosition(1);  // If not pressed then if close claw button is pressed then close
+            }
+            // Wrist control
+            if (wrist_up == true){
+                wrist_man.setPosition(Math.min(1.0,wrist_man.getPosition()+0.01);
+            } else if (wrist_down == true){
+                wrist_man.setPosition(Math.min(0.0,wrist_man.getPosition()-0.01);
+            }
+            shoulder.setPower(myMotorVariable);
+            
+
+                
             // This is test code:
             //
             // Uncomment the following code to test your motor directions.
