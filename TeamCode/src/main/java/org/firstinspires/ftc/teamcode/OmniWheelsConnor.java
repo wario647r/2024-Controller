@@ -34,6 +34,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import java.util.List;
+import java.util.ArrayList;
 
 /*
  * This file contains an example of a Linear "OpMode".
@@ -78,7 +80,12 @@ public class OmniWheelsConnor extends LinearOpMode {
     // Connor's servos
     private Servo   wrist = null;
     private Servo   claw = null;
+    
+    List<DcMotor> allMotors = new ArrayList<>();
+    List<Servo>   allServos = new ArrayList<>();
+    
     @Override
+    
     public void runOpMode() {
 
         // Initialize the hardware variables. Note that the strings used here must correspond
@@ -87,12 +94,19 @@ public class OmniWheelsConnor extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        // Connor's motors
         shoulder = hardwareMap.get(DcMotor.class, "armShoulder");
-        // Connor's servos
+         // Servos
         wrist = hardwareMap.get(Servo.class, "armWrist");
         claw = hardwareMap.get(Servo.class, "armClaw");
         
+        allMotors.add(leftFrontDrive);
+        allMotors.add(leftBackDrive);
+        allMotors.add(rightFrontDrive);
+        allMotors.add(rightBackDrive);
+        allMotors.add(shoulder);
+        
+        allServos.add(wrist);
+        allServos.add(claw);
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
         // ########################################################################################
@@ -107,10 +121,22 @@ public class OmniWheelsConnor extends LinearOpMode {
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        shoulder.setDirection(DcMotor.Direction.UP);             // sets directions for shoulder (up and down)
-        shoulder.setDirection(DcMotor.Direction.DOWN);
         
-
+        // telemetry.addData("Status", "Run Time: " + runtime.toString());
+        // telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
+        // telemetry.addData("Back left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
+        for(DcMotor shoulder in allMotors); {
+            telemetry.addData("MotorSpeed", shoulder.getSpeed());
+            telemetry.addData("MotorSpeed", leftFrontDrive.getSpeed());
+            telemetry.addData("MotorSpeed", leftBackDrive.getSpeed());
+            telemetry.addData("MotorSpeed", rightFrontDrive.getSpeed());
+            telemetry.addData("MotorSpeed", rightBackDrive.getSpeed());
+        }
+        for(Servo claw in allServos) {
+            telemetry.addData("ServoPosition", claw.getPosition());
+            telemetry.addData("ServoPosition", wrist.getPosition());
+        }
+    
         // Wait for the game to start (driver presses START)
         telemetry.addData("High Five", "We Reboted!!!");
         telemetry.update();
@@ -131,12 +157,16 @@ public class OmniWheelsConnor extends LinearOpMode {
             double arm_up_down = gamepad1.right_stick_y; // move shoulder up/down
             
             // Controls for claw
-            boolean grab       = gamepad2.right_bumper > 0.5; // Open is right bumper
+            boolean grip       = gamepad2.right_bumper > 0.5; // Open is right bumper
             boolean release    = gamepad2.left_bumper;        // Close is left bumper
             
             // Controls for wrist
             boolean wrist_up   = gamepad2.dpad_up;   // Up on dpad makes wrist move up
             boolean wrist_down = gamepad2.dpad_down; // Down on dpad makes wrist move down
+
+            telemetry.addData ("Axial", axial);
+            telemetry.addData ("Lateral", lateral);
+            telemetry.addData ("Yaw", yaw);
             
             // Servo setup
             static final double INCREMENT = 0.01;
@@ -168,9 +198,9 @@ public class OmniWheelsConnor extends LinearOpMode {
             }
 
             // Claw control
-            if (grab == true){            // If open claw button is pressed then open
+            if (grip){            // If open claw button is pressed then open
                 claw_man.setPosition(0);   
-            } else if (release == true){
+            } else if (release){
                 claw_man.setPosition(1);  // If not pressed then if close claw button is pressed then close
             }
             // Wrist control
@@ -179,6 +209,15 @@ public class OmniWheelsConnor extends LinearOpMode {
             } else if (wrist_down == true){
                 wrist_man.setPosition(Math.min(0.0,wrist_man.getPosition()-0.01);
             }
+            // Shoulder control
+            if (arm_up_down >= 0.25); {
+                shoulder.setPower(0.1);
+            } else if (arm_up_down <= 0);{
+                shoulder.setPower(-0.1);
+            }
+            
+                    
+            
             shoulder.setPower(myMotorVariable);
             
 
@@ -214,3 +253,14 @@ public class OmniWheelsConnor extends LinearOpMode {
             telemetry.update();
         }
     }}
+
+
+
+        
+
+
+
+
+
+
+
