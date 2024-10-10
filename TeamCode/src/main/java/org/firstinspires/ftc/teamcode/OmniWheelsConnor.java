@@ -169,8 +169,8 @@ public class OmniWheelsConnor extends LinearOpMode {
             telemetry.addData ("Yaw", yaw);
             
             // Servo setup
-            static final double INCREMENT = 0.01;
-            static final int CYCLEMS = 50;
+            final double INCREMENT = 0.01;
+            final int CYCLEMS = 50;
             double MAX_POS = 1.0;
                 MIN_POS = 0.0;
             
@@ -199,15 +199,15 @@ public class OmniWheelsConnor extends LinearOpMode {
 
             // Claw control
             if (grip){            // If open claw button is pressed then open
-                claw_man.setPosition(0);   
+                claw.setPosition(0);   
             } else if (release){
-                claw_man.setPosition(1);  // If not pressed then if close claw button is pressed then close
+                claw.setPosition(1);  // If not pressed then if close claw button is pressed then close
             }
             // Wrist control
             if (wrist_up == true){
-                wrist_man.setPosition(Math.min(1.0,wrist_man.getPosition()+0.01);
+                wrist.setPosition(Math.min(1.0,wrist.getPosition()+0.01);
             } else if (wrist_down == true){
-                wrist_man.setPosition(Math.min(0.0,wrist_man.getPosition()-0.01);
+                wrist.setPosition(Math.min(0.0,wrist.getPosition()-0.01);
             }
             // Shoulder control
             if (arm_up_down >= 0.25); {
@@ -215,10 +215,6 @@ public class OmniWheelsConnor extends LinearOpMode {
             } else if (arm_up_down <= 0);{
                 shoulder.setPower(-0.1);
             }
-            
-                    
-            
-            shoulder.setPower(myMotorVariable);
             
 
                 
