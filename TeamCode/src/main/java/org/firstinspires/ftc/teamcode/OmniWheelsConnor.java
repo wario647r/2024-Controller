@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -94,10 +95,10 @@ public class OmniWheelsConnor extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        shoulder = hardwareMap.get(DcMotor.class, "armShoulder");
+        shoulder = hardwareMap.get(DcMotor.class, "Shoulder");  //mark for arm thang
          // Servos
-        wrist = hardwareMap.get(Servo.class, "armWrist");
-        claw = hardwareMap.get(Servo.class, "armClaw");
+        wrist = hardwareMap.get(Servo.class, "Wrist"); //mark for arm thang
+        claw = hardwareMap.get(Servo.class, "Claw"); //mark for arm thang
         
         allMotors.add(leftFrontDrive);
         allMotors.add(leftBackDrive);
@@ -125,14 +126,14 @@ public class OmniWheelsConnor extends LinearOpMode {
         // telemetry.addData("Status", "Run Time: " + runtime.toString());
         // telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
         // telemetry.addData("Back left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
-        for(DcMotor shoulder in allMotors); {
-            telemetry.addData("MotorSpeed", shoulder.getSpeed());
-            telemetry.addData("MotorSpeed", leftFrontDrive.getSpeed());
-            telemetry.addData("MotorSpeed", leftBackDrive.getSpeed());
-            telemetry.addData("MotorSpeed", rightFrontDrive.getSpeed());
-            telemetry.addData("MotorSpeed", rightBackDrive.getSpeed());
+        for(DcMotor shoulder : allMotors); {
+            telemetry.addData("MotorSpeed", shoulder.getPower());
+            telemetry.addData("MotorSpeed", leftFrontDrive.getPower());
+            telemetry.addData("MotorSpeed", leftBackDrive.getPower());
+            telemetry.addData("MotorSpeed", rightFrontDrive.getPower());
+            telemetry.addData("MotorSpeed", rightBackDrive.getPower());
         }
-        for(Servo claw in allServos) {
+        for(Servo claw : allServos) {
             telemetry.addData("ServoPosition", claw.getPosition());
             telemetry.addData("ServoPosition", wrist.getPosition());
         }
@@ -157,7 +158,7 @@ public class OmniWheelsConnor extends LinearOpMode {
             double arm_up_down = gamepad1.right_stick_y; // move shoulder up/down
             
             // Controls for claw
-            boolean grip       = gamepad2.right_bumper > 0.5; // Open is right bumper
+            boolean grip       = gamepad2.right_bumper; // Open is right bumper
             boolean release    = gamepad2.left_bumper;        // Close is left bumper
             
             // Controls for wrist
@@ -172,7 +173,7 @@ public class OmniWheelsConnor extends LinearOpMode {
             final double INCREMENT = 0.01;
             final int CYCLEMS = 50;
             double MAX_POS = 1.0;
-                MIN_POS = 0.0;
+            double MIN_POS = 0.0;
             
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -180,7 +181,7 @@ public class OmniWheelsConnor extends LinearOpMode {
             double rightFrontPower = axial - lateral - yaw;
             double leftBackPower   = axial - lateral + yaw;
             double rightBackPower  = axial + lateral - yaw;
-            double shoulderPower   = up_down;
+            double shoulderPower   = arm_up_down;
             
             
             // Normalize the values so no wheel power exceeds 100%
@@ -205,14 +206,14 @@ public class OmniWheelsConnor extends LinearOpMode {
             }
             // Wrist control
             if (wrist_up == true){
-                wrist.setPosition(Math.min(1.0,wrist.getPosition()+0.01);
+                wrist.setPosition(Math.min(1.0,wrist.getPosition()+0.01));
             } else if (wrist_down == true){
-                wrist.setPosition(Math.min(0.0,wrist.getPosition()-0.01);
+                wrist.setPosition(Math.min(0.0,wrist.getPosition()-0.01));
             }
             // Shoulder control
-            if (arm_up_down >= 0.25); {
+            if (arm_up_down >= 0.25) {
                 shoulder.setPower(0.1);
-            } else if (arm_up_down <= 0);{
+            } else if (arm_up_down <= 0){
                 shoulder.setPower(-0.1);
             }
             
