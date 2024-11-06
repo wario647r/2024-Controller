@@ -67,7 +67,6 @@ import java.util.ArrayList;
  */
 
 @TeleOp(name="OmniWheelsConnor 0.1", group="OmniOp")
-@Disabled
 public class OmniWheelsConnor extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
@@ -199,10 +198,10 @@ public class OmniWheelsConnor extends LinearOpMode {
             }
 
             // Claw control
-            if (grip){            // If open claw button is pressed then open
-                claw.setPosition(0);   
-            } else if (release){
-                claw.setPosition(1);  // If not pressed then if close claw button is pressed then close
+            if (grip == true){            // If open claw button is pressed then open
+                claw.setPosition(Math.min(1.0,claw.getPosition()+0.01));   
+            } else if (release == true){
+                claw.setPosition(Math.min(0.0,claw.getPosition()-0.01));  // If not pressed then if close claw button is pressed then close
             }
             // Wrist control
             if (wrist_up == true){
