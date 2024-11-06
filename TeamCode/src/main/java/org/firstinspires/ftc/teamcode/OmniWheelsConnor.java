@@ -125,8 +125,8 @@ public class OmniWheelsConnor extends LinearOpMode {
         // telemetry.addData("Status", "Run Time: " + runtime.toString());
         // telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
         // telemetry.addData("Back left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
-        for(DcMotor shoulder : allMotors); {
-            telemetry.addData("MotorSpeed", shoulder.getPower());
+        for(DcMotor motor : allMotors); {
+            telemetry.addData("MotorSpeed", motor.getPower());
             telemetry.addData("MotorSpeed", leftFrontDrive.getPower());
             telemetry.addData("MotorSpeed", leftBackDrive.getPower());
             telemetry.addData("MotorSpeed", rightFrontDrive.getPower());
@@ -154,7 +154,7 @@ public class OmniWheelsConnor extends LinearOpMode {
             double yaw     =  gamepad1.left_stick_x; // Rotate left/right
             
             // Controls for shoulder
-            double arm_up_down = gamepad1.right_stick_y; // move shoulder up/down
+            double arm_up_down = gamepad2.right_stick_y; // move shoulder up/down
             
             // Controls for claw
             boolean grip       = gamepad2.right_bumper; // Open is right bumper
@@ -212,7 +212,7 @@ public class OmniWheelsConnor extends LinearOpMode {
             // Shoulder control
             if (arm_up_down >= 0.25) {
                 shoulder.setPower(0.1);
-            } else if (arm_up_down <= 0){
+            } else if (arm_up_down <= -0.25){
                 shoulder.setPower(-0.1);
             }
             
@@ -240,7 +240,6 @@ public class OmniWheelsConnor extends LinearOpMode {
             rightFrontDrive.setPower(rightFrontPower);
             leftBackDrive.setPower(leftBackPower);
             rightBackDrive.setPower(rightBackPower);
-            shoulder.setPower(shoulderPower);
           
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
