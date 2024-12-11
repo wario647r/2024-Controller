@@ -97,8 +97,52 @@ public class AutoWithHardware extends LinearOpMode {
         while (opModeIsActive()) {
   
             // STARTING AUTONOMOUS
-            robot.driveRobot(
+            
+            robot.driveRobot(1,0,0);        // drive,strafe,turn
+            sleep(500);                     // Drive for 2 feet
+        
+        robot.driveRobot(0,0,0); 
+        sleep(100); 
+            robot.driveRobot(0,0,1);        // Turn left 90 degrees
+            sleep(500); 
+        robot.driveRobot(0,0,0); 
+        sleep(100);
+            robot.driveRobot(1,0,0);        // Drive for 5 feet
+            sleep(2000);            
+        robot.driveRobot(0,0,0); 
+        sleep(100);
+            robot.driveRobot(0,0,1);        // Turn left 45 degrees
+            sleep(250);                     
+        robot.driveRobot(0,0,0);
+        sleep(100);
+            robot.driveRobot(1,0,0);        // Drive for 1 foot
+            sleep(250);
+        robot.driveRobot(0,0,0);
+        sleep(100); 
+            standUp(5);                     // Lift feet up 5 inches
+        robot.driveRobot(0,0,0);
+        sleep(100);
+            liftScrew(5);                   // Lift screw up 5 inches
+        robot.driveRobot(0,0,0);
+        sleep(100); 
+            toggleDepositDoor(open);        // Open deposit door on screw
+        robot.driveRobot(0,0,0);
+        sleep(100); 
+            toggleSweeper(on);              // Turns sweeper on for 3 seconds
+        robot.driveRobot(0,0,0);
+        sleep(100); 
+            toggleSweeper(off);
+        robot.driveRobot(0,0,0);
+        sleep(100); 
+            
+        
 
+//public void setScrewPower(double spin) {}
+//public void toggleDepositDoor() {}
+//public void toggleSweeper() {}
+//public void liftScrew(double inches) {}
+//public void standUp(double inches) {}
+// setSweeperPositions(offset)
 
 
 
